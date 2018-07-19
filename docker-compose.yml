@@ -8,18 +8,18 @@ services:
         ports:
             - "3306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: "123456"
+            MYSQL_ROOT_PASSWORD: "6789JHfgVB56"
             MYSQL_DATABASE: "test"
             MYSQL_USER: "root"
-            MYSQL_PASSWORD: "123456"
+            MYSQL_PASSWORD: "678HfgVB56"
         volumes:
-            - ~/wwwdata/mysql:/var/lib/mysql
+            - /data/work/info/mysql:/var/lib/mysql
 
 ### redis
     redis:
         image: redis
         volumes:
-            - ~/wwwdata/redis:/data
+            - /data/work/info/redis:/data
 
 ### php-fpm5
     php-fpm5:
@@ -27,8 +27,8 @@ services:
         build: ./php/php5
         volumes:
             - ./php/php5/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-            - ~/wwwlogs/php:/var/log/php
-            - ~/wwwroot/repo:/www
+            - /data/work/logs/php:/var/log/php
+            - /data/work/projects:/www
             - ~/.ssh:/root/.ssh
         links:
             - mysql
@@ -40,8 +40,8 @@ services:
         build: ./php/php7
         volumes:
             - ./php/php7/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-            - ~/wwwlogs/php:/var/log/php
-            - ~/wwwroot/repo:/www
+            - /data/work/logs/php:/var/log/php
+            - /data/work/projects:/www
             - ~/.ssh:/root/.ssh
         links:
             - mysql
@@ -55,8 +55,9 @@ services:
             - "433:433"
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ~/wwwetc/nginx/sites-available:/etc/nginx/sites-available
-            - ~/wwwlogs/nginx:/var/log/nginx
+            - /data/work/etc/nginx:/etc/nginx/sites-available
+            - /data/work/logs/nginx:/var/log/nginx
+            - /data/work/projects:/www            
         links:
             - php-fpm5
             - php-fpm7
